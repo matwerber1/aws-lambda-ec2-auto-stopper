@@ -3,7 +3,7 @@ var ec2 = new AWS.EC2();
 
 const config = {
   debug:                  true,                                           // if true, print additional info to logs
-  terminateSpotInstances: true,                                           // spot instances can't be stopped; set to true to terminate spots that aren't properly tagged; false = let spot keep
+  terminateSpotInstances: false,                                           // spot instances can't be stopped; set to true to terminate spots that aren't properly tagged; false = let spot keep
   autostopTagKey:         "autostop",                                     // the tag key that controls whether or not to stop the EC2 instances
   ec2StateCodes:          ["0", "16", "64", "80"],                        // which EC2 states should we tag? regardless, we will only start/stop running instances
   dryRun:                 false                                            // AWS API commands will not actually make changes to infrastructure
