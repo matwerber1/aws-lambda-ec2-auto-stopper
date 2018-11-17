@@ -3,13 +3,17 @@
 # Overview
 
 This [AWS SAM](https://github.com/awslabs/serverless-application-model) project deploys a serverless function comprised of a Lambda that 
-is triggered once every 24 hours by a CloudWatch Event to top any running EC2 instance if the instance does *not* have a tag key/value of 
+is triggered once every 24 hours by a CloudWatch Event to stop any running EC2 instance if the instance does *not* have a tag key/value of 
 { autostop: false }. In other words, if the autostop tag is not present *or* the autostop tag is present with any value other than false,
-this function will stop that instance. This function is triggered once every 24 hours by a CloudWatch Event. The included CloudFormation 
-template also creates an IAM role for the Lambda that allows the function to perform required functions. 
+this function will stop that instance.
 
-If an EC2 instance does not already have an autostop tag, this function will add a key/value tag of { autostop: true }, meaning that the
-instance will be stopped the next time the function runs. 
+The function will optionally terminate any spot instances if config.terminateSpotInstances = true within the Lambda's code.
+
+If the autostop tag is not present on an instance, this function will create a tag of { autostop: true } on the instance and then proceed
+stopping / terminating it as described above. 
+
+Within the Lambda, you can designate an alternative tag name to "autostop" if desired. 
+
 
 # Deployment
 
