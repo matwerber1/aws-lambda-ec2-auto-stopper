@@ -2,7 +2,7 @@ var AWS = require('aws-sdk');
 var ec2 = new AWS.EC2();
 
 const config = {
-  debug:                  true,                                           // if true, print additional info to logs
+  debug:                  false,                                           // if true, print additional info to logs
   terminateSpotInstances: false,                                           // spot instances can't be stopped; set to true to terminate spots that aren't properly tagged; false = let spot keep
   autostopTagKey:         "autostop",                                     // the tag key that controls whether or not to stop the EC2 instances
   ec2StateCodes:          ["0", "16", "64", "80"],                        // which EC2 states should we tag? regardless, we will only start/stop running instances
@@ -69,7 +69,7 @@ exports.handler = async (event, context) => {
           case "spot":
             
             if (config.terminateSpotInstances === true) {
-              console.log(`Stopping on-demand instance ${i.InstanceId} (Name = ${i.TagsAsJSON.Name}) because tag ${config.autostopTagKey}='true'.`);
+              console.log(`Terminating spot instance ${i.InstanceId} (Name = ${i.TagsAsJSON.Name}) because tag ${config.autostopTagKey}='true'.`);
               await ec2.terminateInstances(params).promise();
             } else {
               console.log(`Spot instance ${i.InstanceId} (Name = ${i.TagsAsJSON.Name}) is tagged to stop (${config.autostopTagKey}='true') but Lambda is configured to not terminate spot instances.`);
@@ -82,7 +82,7 @@ exports.handler = async (event, context) => {
         }
         
       } else if (autostopTagValue === "false") {
-        console.log(`Instance ${i.InstanceId} (Name = ${i.TagsAsJSON.Name}) tagged to keep running. No action taken.`);  
+        debugMessage(`Instance ${i.InstanceId} (Name = ${i.TagsAsJSON.Name}) tagged to keep running. No action taken.`);  
       }
       
     }
