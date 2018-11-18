@@ -41,10 +41,3 @@ Within the Lambda, you can designate an alternative tag name to "autostop" if de
 # Usage
 
 The function will automatically trigger once every 24 hours via a CloudWatch Event. 
-
-Optionally, you can manually invoke the Lambda and include a JSON payload of {overridePolicies: true} to change the retention period for all log groups, regardless of what their current policies are. 
-
-Here is an example of the output from the Lambda function: 
-
-  ```
-  ```
