@@ -1,6 +1,13 @@
 # aws-lambda-ec2-auto-stopper
 
-# Overview
+# Deprecated
+
+This project is superceded by the project below:
+https://github.com/matwerber1/aws-lambda-resource-stopper
+
+The new project is my first dive into Typescript, supports multiple resource types, and in general (I hope) is better written.
+
+## Overview
 
 This [AWS SAM](https://github.com/awslabs/serverless-application-model) project deploys a serverless function comprised of a Lambda that 
 is triggered once every 24 hours by a CloudWatch Event to stop any running EC2 instance if the instance does *not* have a tag key/value of 
@@ -15,7 +22,7 @@ stopping / terminating it as described above.
 Within the Lambda, you can designate an alternative tag name to "autostop" if desired. 
 
 
-# Deployment
+## Deployment
 
 1. Clone the repository
   ```sh
